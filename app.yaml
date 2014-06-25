@@ -1,0 +1,22 @@
+application: dropletserver
+version: 2
+runtime: python27
+threadsafe: true
+api_version: 1
+
+handlers:
+# Endpoints handler
+- url: /_ah/spi/.*
+  script: apiServer.APPLICATION
+
+#image upload callback handler
+- url: /upload/.*
+  script: uploadHandler.app
+
+libraries:
+- name: pycrypto
+  version: latest
+- name: endpoints
+  version: 1.0
+- name: PIL
+  version: latest

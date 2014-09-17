@@ -22,7 +22,7 @@ class DropletImage(db.Model):
     blobKey = blobstore.BlobReferenceProperty(required=True)
     like = db.IntegerProperty()
     timeStamp = db.DateTimeProperty(auto_now_add=True)
-    flag=db.IntegerProperty()
+    flag = db.IntegerProperty()
 
 #commentID needs to be required
 class dsImageComments(db.Model):

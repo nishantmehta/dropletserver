@@ -57,9 +57,8 @@ class imageData(messages.Message):
 class responseMessage(messages.Message):
     images = messages.MessageField(imageData, 1, repeated=True)
 
-
 '''
-Like increment API
+Like & flag image API
 '''
 
 
@@ -71,6 +70,13 @@ class incrementLikeResponse(messages.Message):
     imageID = messages.StringField(1)
     likes = messages.IntegerField(2)
 
+class incrementFlagRequest(messages.Message):
+    imageID = messages.StringField(1)
+
+
+class incrementFlagResponse(messages.Message):
+    imageID = messages.StringField(1)
+    flags = messages.IntegerField(2)
 
 '''
 Comment API
@@ -96,8 +102,19 @@ class addCommentRequest(messages.Message):
     commentString = messages.StringField(2)
     userID=messages.StringField(3)
 
+class likeCommentRequest(messages.Message):
+    commentID = messages.StringField(1)
 
+class likeCommentResponse(messages.Message):
+    commentID = messages.StringField(1)
+    likes = messages.IntegerFeild(2)
 
+class flagCommentRequest(messages.Message):
+    commentID = messages.StringField(1)
+
+class flagCommentResponse(messages.Message):
+    commentID = messages.StringField(1)
+    flags = messages.IntegerFeild(2)
 
 
 '''

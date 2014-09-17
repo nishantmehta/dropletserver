@@ -48,7 +48,9 @@ class dsAPI(remote.Service):
         logging.info("Image count from database"+str(imageSet.count()))
         list=[]
         for e in imageSet:
-            a=imageData(imageID=e.imageID, url=images.get_serving_url(e.blobKey), flag="na", like=e.like,score=1)
+            location = geohash.decode_exactly(e.geoHash)
+            a = imageData(imageID=e.imageID, url=images.get_serving_url(e.blobKey),
+                          flag="na", like=e.like, score=1, latitude = location[0], longitude = location[1])
             list.append(a)
         logging.info("Image count for response"+str(len(list)))
         return responseMessage(images=list)
@@ -67,6 +69,20 @@ class dsAPI(remote.Service):
             data.put()
             print data.userID
         return incrementLikeResponse(imageID=imageID,likes=likeCounter )
+
+    #image flag API
+    @endpoints.method(incrementFlagRequest,incrementFlagResponse, name="flag_image")
+    def updateFlag(self,request):
+        imageID=request.imageID
+        imageInfo=db.GqlQuery("SELECT * from DropletImage WHERE imageID = :1", imageID)
+        flagCounter=0
+        for data in imageInfo.run(limit=1):
+            logging.info(data.userID)
+            data.flag=data.flag+1
+            likeCounter=data.flag
+            data.put()
+            print data.userID
+        return incrementFlagResponse(imageID=imageID,flags=flagCounter)
 
     @endpoints.method(getCommentsRequest,getCommentResponse,name="get_all_comments")
     def getComments(self,request):

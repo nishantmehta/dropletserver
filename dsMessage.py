@@ -49,6 +49,9 @@ class imageData(messages.Message):
     flag = messages.StringField(3)
     like = messages.IntegerField(4)
     score = messages.IntegerField(5)
+    latitude = messages.StringFeild(6)
+    longitude = messages.StringFeild(7)
+
 
 
 class responseMessage(messages.Message):

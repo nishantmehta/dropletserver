@@ -36,7 +36,6 @@ class dsAPI(remote.Service):
         #db.delete(DropletImage.all(keys_only=True))
         userID=request.userID
         callbackURLString="/upload/"+str(geoHash)+"/"+userID
-
         logging.info("call back URL is " + callbackURLString)
         upload_url = blobstore.create_upload_url(callbackURLString, gs_bucket_name='dropletserver.appspot.com/publicimages/')
         logging.info("upload url is "+ upload_url)

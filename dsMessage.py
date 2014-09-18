@@ -49,8 +49,8 @@ class imageData(messages.Message):
     flag = messages.StringField(3)
     like = messages.IntegerField(4)
     score = messages.IntegerField(5)
-    latitude = messages.StringFeild(6)
-    longitude = messages.StringFeild(7)
+    latitude = messages.StringField(6)
+    longitude = messages.StringField(7)
 
 
 
@@ -107,14 +107,14 @@ class likeCommentRequest(messages.Message):
 
 class likeCommentResponse(messages.Message):
     commentID = messages.StringField(1)
-    likes = messages.IntegerFeild(2)
+    likes = messages.IntegerField(2)
 
 class flagCommentRequest(messages.Message):
     commentID = messages.StringField(1)
 
 class flagCommentResponse(messages.Message):
     commentID = messages.StringField(1)
-    flags = messages.IntegerFeild(2)
+    flags = messages.IntegerField(2)
 
 
 '''

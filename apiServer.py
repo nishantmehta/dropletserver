@@ -49,8 +49,9 @@ class dsAPI(remote.Service):
         list=[]
         for e in imageSet:
             location = geohash.decode_exactly(e.geoHash)
+            logging.info("image")
             a = imageData(imageID=e.imageID, url=images.get_serving_url(e.blobKey),
-                          flag="na", like=e.like, score=1, latitude = location[0], longitude = location[1])
+                          flag=e.flag, like=e.like, score=1, latitude = str(location[0]), longitude = str(location[1]))
             list.append(a)
         logging.info("Image count for response"+str(len(list)))
         return responseMessage(images=list)
@@ -79,7 +80,7 @@ class dsAPI(remote.Service):
         for data in imageInfo.run(limit=1):
             logging.info(data.userID)
             data.flag=data.flag+1
-            likeCounter=data.flag
+            flagCounter=data.flag
             data.put()
             print data.userID
         return incrementFlagResponse(imageID=imageID,flags=flagCounter)
@@ -101,6 +102,8 @@ class dsAPI(remote.Service):
         newComment=dsImageComments(userID=request.userID,
                                    comment=request.commentString,
                                    imageID=request.imageID,
+                                   likes = 0,
+                                   flag = 0,
                                    commentID="cc"+str(int(time.time()))
                                    )
         newComment.put()
@@ -116,5 +119,27 @@ class dsAPI(remote.Service):
             return getCommentResponse(imageID=imageID,comments=list)
         else:
             return getCommentResponse(imageID=imageID)
+
+    @endpoints.method(likeCommentRequest,likeCommentResponse,name="like_comment")
+    def likeComment(self,request):
+        commentID=request.commentID
+        imageInfo=db.GqlQuery("SELECT * from dsImageComments WHERE commentID = :1", commentID)
+        likeCounter=0
+        for data in imageInfo.run(limit=1):
+            data.likes=data.likes+1
+            likeCounter=data.likes
+            data.put()
+        return likeCommentResponse(commentID=commentID,flags=likeCounter)
+
+    @endpoints.method(flagCommentRequest,flagCommentResponse,name="flag_comment")
+    def flagComment(self,request):
+        commentID=request.commentID
+        imageInfo=db.GqlQuery("SELECT * from dsImageComments WHERE commentID = :1", commentID)
+        flagCounter=0
+        for data in imageInfo.run(limit=1):
+            data.flag=data.flag+1
+            flagCounter=data.flag
+            data.put()
+        return flagCommentResponse(commentID=commentID, flags=flagCounter)
 
 APPLICATION = endpoints.api_server([dsAPI])

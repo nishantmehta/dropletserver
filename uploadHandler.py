@@ -45,6 +45,7 @@ class PhotoUploadHandler(blobstore_handlers.BlobstoreUploadHandler):
                                       userID=cuserID,
                                       geoHash=geohash,
                                       like=0,
+                                      flag = 0,
                                       blobKey=blob_key)
             imageObject.put()
             logging.info("image saved with blobkey "+str(blob_key))

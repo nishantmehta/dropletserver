@@ -129,7 +129,7 @@ class dsAPI(remote.Service):
             data.likes=data.likes+1
             likeCounter=data.likes
             data.put()
-        return likeCommentResponse(commentID=commentID,flags=likeCounter)
+        return likeCommentResponse(commentID=commentID,likes=likeCounter)
 
     @endpoints.method(flagCommentRequest,flagCommentResponse,name="flag_comment")
     def flagComment(self,request):
@@ -140,6 +140,6 @@ class dsAPI(remote.Service):
             data.flag=data.flag+1
             flagCounter=data.flag
             data.put()
-        return flagCommentResponse(commentID=commentID, flags=flagCounter)
+        return flagCommentResponse(commentID=commentID, flgitags=flagCounter)
 
 APPLICATION = endpoints.api_server([dsAPI])

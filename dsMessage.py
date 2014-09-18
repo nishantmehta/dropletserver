@@ -46,7 +46,7 @@ class imageRequestMessage(messages.Message):
 class imageData(messages.Message):
     url = messages.StringField(1)
     imageID = messages.StringField(2)
-    flag = messages.StringField(3)
+    flag = messages.IntegerField(3)
     like = messages.IntegerField(4)
     score = messages.IntegerField(5)
     latitude = messages.StringField(6)

@@ -10,7 +10,7 @@ handlers:
   script: apiServer.APPLICATION
 
 #image upload callback handler
-- url: /upload/.*
+- url: /_ah/upload/.*
   script: uploadHandler.app
 
 libraries:
